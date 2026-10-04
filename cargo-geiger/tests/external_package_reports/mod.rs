@@ -152,6 +152,28 @@ pub fn itertools_safety_report() -> SafetyReport {
                     unsafe_: 0,
                 },
             },
+            unused: CounterBlock {
+                functions: Count {
+                    safe: 110,
+                    unsafe_: 0,
+                },
+                exprs: Count {
+                    safe: 1720,
+                    unsafe_: 70,
+                },
+                item_impls: Count {
+                    safe: 30,
+                    unsafe_: 3,
+                },
+                item_traits: Count {
+                    safe: 2,
+                    unsafe_: 1,
+                },
+                methods: Count {
+                    safe: 35,
+                    unsafe_: 3,
+                },
+            },
             ..Default::default()
         },
     };
@@ -206,7 +228,25 @@ pub fn generational_arena_safety_report() -> SafetyReport {
                 },
                 ..Default::default()
             },
-            unused: CounterBlock::default(),
+            unused: CounterBlock {
+                functions: Count {
+                    safe: 6,
+                    unsafe_: 0,
+                },
+                exprs: Count {
+                    safe: 242,
+                    unsafe_: 0,
+                },
+                item_impls: Count {
+                    safe: 7,
+                    unsafe_: 0,
+                },
+                methods: Count {
+                    safe: 8,
+                    unsafe_: 0,
+                },
+                ..Default::default()
+            },
             forbids_unsafe: true,
         },
     };
@@ -242,6 +282,17 @@ pub fn idna_safety_report() -> SafetyReport {
                 exprs: Count {
                     safe: 13596,
                     unsafe_: 1,
+                },
+                ..Default::default()
+            },
+            unused: CounterBlock {
+                functions: Count {
+                    safe: 7,
+                    unsafe_: 0,
+                },
+                exprs: Count {
+                    safe: 182,
+                    unsafe_: 0,
                 },
                 ..Default::default()
             },
@@ -303,6 +354,28 @@ pub fn smallvec_safety_report() -> SafetyReport {
                 methods: Count {
                     safe: 92,
                     unsafe_: 13,
+                },
+            },
+            unused: CounterBlock {
+                functions: Count {
+                    safe: 18,
+                    unsafe_: 0,
+                },
+                exprs: Count {
+                    safe: 126,
+                    unsafe_: 0,
+                },
+                item_impls: Count {
+                    safe: 2,
+                    unsafe_: 0,
+                },
+                item_traits: Count {
+                    safe: 1,
+                    unsafe_: 0,
+                },
+                methods: Count {
+                    safe: 14,
+                    unsafe_: 0,
                 },
             },
             ..Default::default()
@@ -390,6 +463,17 @@ pub(super) fn unicode_normalization_safety_report() -> SafetyReport {
                     safe: 21,
                     unsafe_: 0,
                 },
+            },
+            unused: CounterBlock {
+                functions: Count {
+                    safe: 22,
+                    unsafe_: 0,
+                },
+                exprs: Count {
+                    safe: 84,
+                    unsafe_: 0,
+                },
+                ..Default::default()
             },
             ..Default::default()
         },

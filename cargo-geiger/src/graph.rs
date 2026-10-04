@@ -9,7 +9,6 @@ use crate::mapping::{CargoMetadataParameters, DepsNotReplaced};
 use cargo::util::CargoResult;
 use cargo_platform::Cfg;
 use krates::cm::{Dependency, DependencyKind, Package, PackageId};
-use krates::{Kid, Node};
 use petgraph::graph::NodeIndex;
 use std::collections::hash_map::Entry;
 use std::collections::HashMap;
@@ -105,23 +104,24 @@ fn add_package_dependencies_to_graph(
     is_root_package: bool,
 ) {
     let index = graph.nodes[&package_id];
-    let kid: Kid = package_id.clone().into();
-
-    let krates_node_option =
-        cargo_metadata_parameters.krates.node_for_kid(&kid);
+    let package_option = cargo_metadata_parameters
+        .metadata
+        .packages
+        .iter()
+        .find(|package| package.id == package_id);
 
     let dep_not_replaced_option = cargo_metadata_parameters
         .metadata
         .deps_not_replaced(&package_id, is_root_package);
 
-    match (krates_node_option, dep_not_replaced_option) {
-        (Some(Node::Krate { krate, .. }), Some(dependencies)) => {
+    match (package_option, dep_not_replaced_option) {
+        (Some(package), Some(dependencies)) => {
             for (dependency_package_id, _) in dependencies {
                 let dependency_iterator = filter_dependencies(
                     cargo_metadata_parameters,
                     &dependency_package_id,
                     graph_configuration,
-                    krate,
+                    package,
                 );
 
                 for dependency in dependency_iterator {

@@ -231,6 +231,17 @@ impl IntegrationTest for Test4 {
                     },
                     ..Default::default()
                 },
+                unused: CounterBlock {
+                    functions: Count {
+                        safe: 1,
+                        unsafe_: 0,
+                    },
+                    exprs: Count {
+                        safe: 1,
+                        unsafe_: 1,
+                    },
+                    ..Default::default()
+                },
                 ..Default::default()
             },
         }

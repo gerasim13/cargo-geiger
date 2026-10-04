@@ -93,17 +93,25 @@ where
     let package_id_to_metrics = Arc::new(Mutex::new(HashMap::new()));
     let ignored = Arc::new(Mutex::new(HashSet::new()));
     let packages = cargo_metadata_parameters.metadata.packages.to_vec();
-    let package_code_files: Vec<_> = match dependency_groups {
-        Some(groups) => packages
-            .iter()
-            .flat_map(|package| {
-                compiled_rs_files(package, groups)
-                    .into_iter()
-                    .map(move |file| (package.id.clone(), file))
-            })
-            .collect(),
-        None => find_rs_files_in_packages(&packages).collect(),
-    };
+    let compiled_files = packages.iter().flat_map(|package| {
+        dependency_groups
+            .into_iter()
+            .flat_map(move |groups| compiled_rs_files(package, groups))
+            .map(move |file| (package.id.clone(), file))
+    });
+    let mut seen = HashSet::new();
+    let package_code_files: Vec<_> = find_rs_files_in_packages(&packages)
+        .chain(compiled_files)
+        .filter(|(id, file)| {
+            let path = match file {
+                RsFile::BinRoot(path)
+                | RsFile::CustomBuildRoot(path)
+                | RsFile::LibRoot(path)
+                | RsFile::Other(path) => path,
+            };
+            seen.insert((id.clone(), path.clone()))
+        })
+        .collect();
     let package_code_file_count = package_code_files.len();
     let processed_count = AtomicUsize::new(0);
     package_code_files.into_par_iter().for_each_with(

@@ -1,6 +1,5 @@
 ---
 source: cargo-geiger/tests/readme_integration_tests.rs
-assertion_line: 71
 expression: readme_content
 ---
 # README Title
@@ -23,9 +22,9 @@ Symbols:
 
 Functions  Expressions  Impls  Traits  Methods  Dependency
 
-0/0        0/0          0/0    0/0     0/0      ❓  test4_workspace_with_top_level_package 0.1.0
+0/0        0/1          0/0    0/0     0/0      ❓  test4_workspace_with_top_level_package 0.1.0
 1/1        2/2          0/0    0/0     0/0      ☢️  └── test1_package_with_no_deps 0.1.0
 
-1/1        2/2          0/0    0/0     0/0
+1/1        2/3          0/0    0/0     0/0
 
 ```
