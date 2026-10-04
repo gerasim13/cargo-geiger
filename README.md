@@ -36,6 +36,14 @@ Usage
 1. Navigate to the same directory as the `Cargo.toml` you want to analyze.
 2. `cargo geiger`
 
+The default report inventories the Rust files used by the selected build
+configuration, including generated `include!` sources. It does not parse
+documentation, binary resources, or uncompiled files in package directories.
+The `unused` counters therefore remain zero. Counts still describe syntax in
+each compiled input file, rather than individual expressions retained after
+conditional compilation. `--forbid-only` scans crate entry points without
+building and retains its separate source-tree scope.
+
 Intended Use
 ------------
 
@@ -88,4 +96,3 @@ Why the name?
 <https://en.wikipedia.org/wiki/Geiger_counter>
 
 Unsafe code, like ionizing radiation, is unavoidable in some situations and should be safely contained!
-
