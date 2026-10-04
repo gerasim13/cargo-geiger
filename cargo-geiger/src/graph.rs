@@ -4,9 +4,7 @@ use extra_deps::ExtraDeps;
 
 use crate::args::{Args, DepsArgs, TargetArgs};
 use crate::cli::get_cfgs;
-use crate::mapping::{
-    CargoMetadataParameters, DepsNotReplaced, MatchesIgnoringSource,
-};
+use crate::mapping::{CargoMetadataParameters, DepsNotReplaced};
 
 use cargo::util::CargoResult;
 use cargo_platform::Cfg;
@@ -177,11 +175,15 @@ fn filter_dependencies<'a>(
         .dependencies
         .iter()
         .filter(|d| {
-            d.matches_ignoring_source(
-                cargo_metadata_parameters.krates,
-                dependency_package_id,
-            )
-            .unwrap_or(false)
+            cargo_metadata_parameters
+                .metadata
+                .packages
+                .iter()
+                .find(|candidate| candidate.id == *dependency_package_id)
+                .is_some_and(|candidate| {
+                    candidate.name == d.name
+                        && d.req.matches(&candidate.version)
+                })
         })
         .filter(|d| graph_configuration.extra_deps.allows(d.kind))
         .filter(|d| {
