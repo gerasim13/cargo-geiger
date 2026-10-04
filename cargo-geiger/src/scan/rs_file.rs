@@ -246,6 +246,7 @@ fn parse_rustc_dep_info(
 mod rs_file_tests {
     use super::*;
     use rstest::*;
+    use walkdir::WalkDir;
 
     #[rstest(
         input_rs_file,
