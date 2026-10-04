@@ -44,8 +44,8 @@ fn generated_rust_is_counted_and_resource_inputs_are_not_rust() {
         if format == "Json" {
             let report: SafetyReport =
                 serde_json::from_slice(&output.stdout).unwrap();
-            assert!(report.used_but_not_scanned_files.is_empty(), "{report:?}");
-            assert!(report.packages_without_metrics.is_empty(), "{report:?}");
+            assert!(report.used_but_not_scanned_files.is_empty(), "{:?}", report);
+            assert!(report.packages_without_metrics.is_empty(), "{:?}", report);
             assert_eq!(
                 report
                     .packages
